@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavBarComponent],
   template: `
-    <h1>Welcome to {{title}}!</h1>
-
-    <router-outlet />
+    <app-nav-bar />
+    <div style="margin-top: 4rem;">
+      <router-outlet />
+    </div>
   `,
-  styles: [],
 })
 export class AppComponent {
   title = 'recipewebsite.client';
