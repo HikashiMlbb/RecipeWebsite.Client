@@ -7,7 +7,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
   imports: [RouterOutlet, NavBarComponent],
   template: `
     <app-nav-bar />
-    <div style="margin-top: 4rem;">
+    <div style="margin-top: 4rem; margin-bottom: 10rem;">
       <router-outlet />
     </div>
   `,
