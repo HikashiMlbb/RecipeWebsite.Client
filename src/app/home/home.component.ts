@@ -6,7 +6,7 @@ import { RecipesLayoutComponent } from "../recipes-layout/recipes-layout.compone
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  imports: [CommonModule, RouterLink, RecipesLayoutComponent],
+  imports: [RouterLink, RecipesLayoutComponent],
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
