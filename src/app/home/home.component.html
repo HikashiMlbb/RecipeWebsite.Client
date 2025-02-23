@@ -1,10 +1,19 @@
-<app-recipes-layout class="recipes-layout"/>
-
 <div class="sidebar">
-    <form class="search-form">
-        <input type="text" name="query" placeholder="Найти по запросу">
-        <input class="search-button" type="submit" value="Найти">
-    </form>
+    <div class="sidebar-search">
+        <div class="search-query">
+            <input type="text" placeholder="Найти по запросу">
+        </div>
+        <div class="search-button">
+            <input type="submit" value="🔍">
+        </div>
+    </div>
+    <div class="sidebar-create">
+        <a routerLink="/create">
+            <button>
+                Создать рецепт
+            </button>
+        </a>
+    </div>
     <hr>
     <div class="sidebar-sort">
         <h2>Сортировать по:</h2>
@@ -14,12 +23,6 @@
         <input name="sort-by" type="radio">
         <label>Сначала новые</label>
     </div>
-    <hr>
-    <div class="sidebar-create">
-        <a routerLink="/create">
-            <button>
-                Создать рецепт
-            </button>
-        </a>
-    </div>
 </div>
+
+<app-recipes-layout class="recipes-layout"/>

@@ -23,35 +23,50 @@ div.sidebar {
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    border-left: 0.2rem solid #333;
+    border-right: 0.2rem solid #333;
+    overflow: hidden;
+    width: 100%;
 }
 
-div.sidebar > form {
+div.sidebar-search {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    overflow: hidden;
+    gap: 1rem;
+    width: 100%;
 }
 
-
-.search-form * {
-    font-size: 2rem;
+div.search-query {
+    flex-basis: 90%;
+    width: 100%;
+    max-width: 100%;
 }
 
-input.search-button {
-    width: 10rem;
-    margin: 0.5rem auto;
+div.search-query > input {
+    width: 100%;
+}
+
+div.search-button {
+    flex-basis: 10%;
+    width: 100%;
+}
+
+div.sidebar-search input {
+    font-size: 1.8rem;
+}
+
+div.search-button > input {
     background-color: aliceblue;
+    height: 100%;
+    width: 100%;
+    padding: 0.1rem;
     border-width: 0.2rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     border-style: solid;
     border-color: #808985;
-    transition: width 0.2s ease-in-out,
-                border-color 0.2s ease-in-out,
-                font-size 0.2s ease-in-out;
 }
 
-input.search-button:hover {
-    width: 90%;
-    font-size: 1.8rem !important;
+div.search-button > input:hover {
     cursor: pointer;
 }
 
@@ -70,7 +85,7 @@ div.sidebar-sort label {
 }
 
 div.sidebar-create {
-    margin-top: 1rem;
+    margin: 1rem auto;
     text-align: center;
 }
 
