@@ -33,6 +33,9 @@ div.card > div.image > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 1rem;
+    border: 0.15rem solid #444;
+    box-sizing: border-box;
 }
 
 div.card > div.image {
