@@ -1,5 +1,10 @@
 <div class="grid-layout">
-    @for (item of foo; track $index) {
-        <app-recipe-card [recipeId]="$index"/>
+    @for (item of recipes; track $index) {
+        <app-recipe-card [recipeId]="item.id" 
+                         [title]="item.title"
+                         [image]="item.image"
+                         [difficulty]="item.difficulty"
+                         [cookingTime]="item.cookingTime"
+                         [rating]="item.rating" />
     }
 </div>

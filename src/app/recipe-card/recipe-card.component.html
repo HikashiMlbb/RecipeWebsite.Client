@@ -1,16 +1,16 @@
 <a [href]="'/details/' + recipeId">
     <div class="card">
         <div class="image">
-            <img src="https://cdn1.ozonusercontent.com/s3/club-storage/images/article_image_1632x1000/685/f6d7c2eb-4616-4d99-bdf0-0d28b62f2dce.jpeg" alt="">
+            <img [src]="image" alt="">
         </div>
         <hr>
         <div class="details">
             <div>
-                <h2><u>Паста Болоньезе</u></h2>
-                <p>Сложность: <span>🔥🔥🔥</span></p>
-                <p>Время готовки: <span>1 час</span></p>
+                <h2><u>{{ title }}</u></h2>
+                <p>Сложность: <span>{{ getDifficulty() }}</span></p>
+                <p>Время готовки: <span>{{ getCookingTime() }}</span></p>
             </div>
-            <p class="rate"><span>🌟🌟🌟🌟🌟</span></p>
+            <p class="rate"><span>{{ rating }} </span><span>{{ getRating() }}</span></p>
         </div>
     </div>
 </a>

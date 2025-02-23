@@ -7,13 +7,25 @@ import { Component, Input } from '@angular/core';
   styleUrl: './recipe-card.component.css'
 })
 export class RecipeCardComponent {
-  @Input() recipeId: number = -1;
+  private readonly _difficultyIcon: string = "🔥";
+  private readonly _ratingIcon: string = "🌟";
 
-  // Id = x.Id.Value,
-  // Title = x.Title.Value,
-  // Image = x.ImageName.Value,
-  // Difficulty = x.Difficulty.ToString(),
-  // CookingTime = x.CookingTime,
-  // Rating = x.Rate.Value,
-  // Votes = x.Rate.TotalVotes
+  @Input({ required: true }) recipeId!: number;
+  @Input({ required: true }) title!: string;
+  @Input({ required: true }) image!: string;
+  @Input({ required: true }) difficulty!: number;
+  @Input({ required: true }) cookingTime!: number;
+  @Input({ required: true }) rating!: number;
+
+  getDifficulty(): string {
+    return this._difficultyIcon.repeat(this.difficulty);
+  }
+
+  getCookingTime(): string {
+    return new Date(this.cookingTime).toDateString();
+  }
+
+  getRating(): string {
+    return this._ratingIcon.repeat(Math.round(this.rating))
+  }
 }
