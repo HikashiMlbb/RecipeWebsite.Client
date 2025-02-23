@@ -109,8 +109,7 @@ div.sidebar-create button {
 }
 
 div.sidebar-create button:hover {
-    border-radius: 1rem;
-    border-width: 0.4rem;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
 
