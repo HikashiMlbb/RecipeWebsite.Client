@@ -10,3 +10,9 @@ div.grid-layout {
     padding: 1rem;
     gap: 2rem 1rem;
 }
+
+div.loading {
+    grid-column: 2;
+    text-align: center;
+    align-self: center;
+}

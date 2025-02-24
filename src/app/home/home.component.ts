@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, RouterEvent, RouterLink, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Router, RouterLink, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { RecipesLayoutComponent } from "../recipes-layout/recipes-layout.component";
 import { filter, Subscription } from 'rxjs';
+import { RecipeService } from '@/services/recipes/recipe.service';
+import { Recipe } from '@/services/recipes/recipe.interface';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,10 @@ import { filter, Subscription } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   private currentPath!: String
   private routerEventSubscription!: Subscription;
+
+  private service: RecipeService = inject(RecipeService);
+
+  recipes: Array<Recipe> = [];
   
   constructor (private router: Router, private location: ActivatedRoute) {}
 
@@ -19,6 +25,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.routerEventSubscription = this.router.events
       .pipe(filter(x => x instanceof NavigationEnd))
       .subscribe(() => window.scrollTo({ top: 0, behavior: 'smooth'}));
+
+    setTimeout(() => {
+      this.service.fetchRecipesByPage(1, 1, '')
+        .subscribe(data => this.recipes = data);
+    }, 500);
   }
 
   ngOnDestroy(): void {
