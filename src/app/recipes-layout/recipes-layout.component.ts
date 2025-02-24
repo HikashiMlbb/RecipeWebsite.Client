@@ -41,14 +41,6 @@ export class RecipesLayoutComponent {
       difficulty: 1,
       cookingTime: 155,
       rating: 4.3
-    },
-    {
-      id: 3,
-      title: "Стрёмные Сосиски",
-      image: "https://www.ermolino-produkty.ru/picts/articles/1000%D1%85750_%D0%BA%D0%B0%D0%BA_%D0%B6%D0%B0%D1%80%D0%B8%D1%82%D1%8C_%D1%81%D0%BE%D1%81%D0%B8%D1%81%D0%BA%D0%B8.jpg",
-      difficulty: 1,
-      cookingTime: 155,
-      rating: 1.6
     }
   ];
 }

@@ -16,6 +16,7 @@
     border-color: #90989f;
     border-radius: 1rem;
     box-sizing: border-box;
+    height: min-content;
 }
 
 div.sidebar {
