@@ -1,12 +1,32 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { map, Observable, of } from 'rxjs';
 import { Recipe } from './recipe.interface'
+import { HttpClient } from '@angular/common/http';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root', deps: [ HttpClient ] })
 export class RecipeService {
+  private readonly http: HttpClient = inject(HttpClient);
+
+  private readonly difficultyMapper: Map<number, number> = new Map([
+    [1, 1],
+    [2, 3],
+    [3, 5]
+  ]);
+
   constructor() {}
 
   fetchRecipesByPage(page: number, pageSize: number, sort: string): Observable<Array<Recipe>> {
+    // return this.http
+    //   .get<Array<Recipe>>('http://localhost/api/recipes/page', { params: { "page": page, "pageSize": pageSize, "sortType": "popular" }})
+    // .pipe(
+    //   map((recipes: Recipe[]): Recipe[] => 
+    //     recipes.map((recipe): Recipe => 
+    //       ({ ...recipe, 
+    //         image: `http://localhost/static/${recipe.image}`,
+    //         difficulty: this.difficultyMapper.get(recipe.difficulty)!
+    //       })))
+    // );
+
     return of([
       {
         id: 1,
@@ -36,10 +56,16 @@ export class RecipeService {
         id: 5,
         title: "W W W W W W W W W W W W W W W W W W W W W W W W WW",
         image: "https://lifehacker.ru/wp-content/uploads/2018/05/tomatnyj-sup_1525442518.jpg",
-        difficulty: 5,
+        difficulty: 3,
         cookingTime: '6.23:59:59',
         rating: 4.4
       }
-    ]);
+    ]) .pipe(
+      map((recipes: Recipe[]): Recipe[] => 
+        recipes.map((recipe): Recipe => 
+          ({ ...recipe,
+            difficulty: this.difficultyMapper.get(recipe.difficulty)!
+          })))
+    );;
   }
 }

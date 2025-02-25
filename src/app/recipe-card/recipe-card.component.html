@@ -11,7 +11,11 @@
                 <p>Время готовки: <span>{{ getCookingTime() }}</span></p>
             </div>
             <div class="details-rate">
-                <p><span>{{ rating }} </span><span>{{ getRating() }}</span></p>
+                @if (rating != 0) {
+                    <p><span>{{ rating }} </span><span>{{ getRating() }}</span></p>
+                } @else {
+                    <p>Нет оценок</p>
+                }
             </div>
         </div>
     </div>
