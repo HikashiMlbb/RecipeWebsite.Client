@@ -5,12 +5,14 @@
         </div>
         <hr>
         <div class="details">
-            <div>
-                <h2><u>{{ title }}</u></h2>
+            <div class="details-content">
+                <h2 [title]="title">{{ title }}</h2>
                 <p>Сложность: <span>{{ getDifficulty() }}</span></p>
                 <p>Время готовки: <span>{{ getCookingTime() }}</span></p>
             </div>
-            <p class="rate"><span>{{ rating }} </span><span>{{ getRating() }}</span></p>
+            <div class="details-rate">
+                <p><span>{{ rating }} </span><span>{{ getRating() }}</span></p>
+            </div>
         </div>
     </div>
 </a>
