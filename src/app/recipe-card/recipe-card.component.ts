@@ -1,10 +1,10 @@
 import { RecipeCardService } from '@/recipe-card/recipe-card.service';
 import { Component, Input, inject } from '@angular/core';
-import moment from 'moment'
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-card',
-  imports: [],
+  imports: [ RouterLink ],
   templateUrl: './recipe-card.component.html',
   styleUrl: './recipe-card.component.css'
 })
