@@ -17,14 +17,18 @@
     <hr>
     <div class="sidebar-sort">
         <h2>Сортировать по:</h2>
-        <input id="popular-first" name="sort-by" checked type="radio">
+        <input [(ngModel)]="chosenSort" (change)="onSortChanged()" [value]="sortTypes.popular" id="popular-first" name="sort-by" checked type="radio">
         <label for="popular-first">Сначала популярные</label>
         <br>
-        <input id="newest-first" name="sort-by" type="radio">
+        <input [(ngModel)]="chosenSort" (change)="onSortChanged()" [value]="sortTypes.newest" id="newest-first" name="sort-by" type="radio">
         <label for="newest-first">Сначала новые</label>
     </div>
 </div>
 
 <app-recipes-layout 
+    infiniteScroll
+    (scrolled)="onScrolled()"
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="500"
     class="recipes-layout"
     [recipes]="recipes"/>

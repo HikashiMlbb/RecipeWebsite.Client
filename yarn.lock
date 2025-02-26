@@ -4552,6 +4552,13 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+ngx-infinite-scroll@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-19.0.0.tgz#7b24d148426ccf9f0524d1a14eb4952d97cee415"
+  integrity sha512-Ft4xNNDLXoDGi2hF6ylehjxbG8JIgfoL6qDWWcebGMcbh1CEfEsh0HGkDuFlX/cBBMenRh2HFbXlYq8BAtbvLw==
+  dependencies:
+    tslib "^2.3.0"
+
 node-addon-api@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-6.1.0.tgz#ac8470034e58e67d0c6f1204a18ae6995d9c0d76"
