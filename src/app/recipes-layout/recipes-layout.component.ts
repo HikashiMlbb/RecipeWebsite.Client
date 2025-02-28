@@ -10,4 +10,5 @@ import { Recipe } from '@/services/recipes/recipe.interface';
 })
 export class RecipesLayoutComponent {
   @Input() recipes!: Array<Recipe>
+  @Input() isFinished: boolean = false;
 }

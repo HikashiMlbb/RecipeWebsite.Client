@@ -1,11 +1,11 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterLink, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { RecipesLayoutComponent } from "../recipes-layout/recipes-layout.component";
-import { filter, Observable, Subscription } from 'rxjs';
+import { of, tap, finalize, catchError, filter, Observable, Subscription } from 'rxjs';
 import { RecipeService } from '@/services/recipes/recipe.service';
 import { Recipe } from '@/services/recipes/recipe.interface';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -14,19 +14,25 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private routerEventSubscription!: Subscription;
-  private pageCounter: number = 1;
-  private readonly pageSize: number = 6;
   readonly sortTypes = {
     popular: "popular",
     newest: "newest"
   }
-  chosenSort: string = this.sortTypes.popular;
 
+  private readonly pageSize: number = 6;
   private service: RecipeService = inject(RecipeService);
+  private routerEventSubscription!: Subscription;
+  private pageCounter: number = 1;
+  private isQuery: boolean = false;
+  private isFinalPage: boolean = false;
+  private isScrolling: boolean = false;
 
+  @ViewChild("form") form!: NgForm;
   recipes: Array<Recipe> = [];
-  
+  chosenSort: string = this.sortTypes.popular;
+  isFinished: boolean = false;
+  query!: string;
+
   constructor (private router: Router) {}
 
   ngOnInit(): void {
@@ -34,7 +40,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(filter(x => x instanceof NavigationEnd))
       .subscribe(() => window.scrollTo({ top: 0, behavior: 'smooth'}));
 
-    this.fetchRecipes().subscribe(data => this.recipes = data)
+    this.fetchRecipes().subscribe(data => {
+      this.recipes = data;
+      this.isFinished = true;
+    });
   }
 
   ngOnDestroy(): void {
@@ -42,13 +51,42 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onScrolled(): void {
+    if (this.isQuery || this.isFinalPage || this.isScrolling) return;
+  
+    this.isScrolling = true;
     this.pageCounter++;
-    this.fetchRecipes().subscribe(data => this.recipes = this.recipes.concat(data));
+  
+    this.fetchRecipes()
+      .pipe(finalize(() => this.isScrolling = false))
+      .subscribe(data => {
+        this.recipes = [...this.recipes, ...data];
+      });
   }
 
   onSortChanged(): void {
+    this.form.setValue({ "query": "" });
+    this.isFinalPage = false;
+    this.isFinished = false;
+    this.isQuery = false;
     this.pageCounter = 1;
-    this.fetchRecipes().subscribe(data => this.recipes = data);
+    this.recipes = [];
+
+    this.fetchRecipes()
+      .pipe(finalize(() => this.isFinished = true))
+      .subscribe(data => this.recipes = data);
+  }
+
+  onFormSubmit(): void {
+    if (!this.form.valid) return;
+
+    this.isFinished = false;
+    this.chosenSort = "";
+    this.isQuery = true;
+    this.recipes = [];
+    this.service.fetchRecipesByQuery(this.form.value.query).subscribe(data => {
+      this.recipes = data;
+      this.isFinished = true;
+    });
   }
 
   private fetchRecipes(): Observable<Array<Recipe>> {

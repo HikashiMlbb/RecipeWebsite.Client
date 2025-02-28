@@ -1,12 +1,12 @@
 <div class="sidebar">
-    <div class="sidebar-search">
+    <form #form="ngForm" (ngSubmit)="onFormSubmit()" class="sidebar-search">
         <div class="search-query">
-            <input type="text" placeholder="Найти по запросу">
+            <input name="query" type="text" ngModel required placeholder="Найти по запросу" />
         </div>
         <div class="search-button">
             <input type="submit" value="🔍">
         </div>
-    </div>
+    </form>
     <div class="sidebar-create">
         <a routerLink="/create">
             <button>
@@ -26,9 +26,11 @@
 </div>
 
 <app-recipes-layout 
+    [recipes]="recipes"
+    [isFinished]="isFinished"
     infiniteScroll
     (scrolled)="onScrolled()"
     [infiniteScrollDistance]="1"
     [infiniteScrollThrottle]="500"
     class="recipes-layout"
-    [recipes]="recipes"/>
+    [alwaysCallback]=true />

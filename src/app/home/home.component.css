@@ -19,7 +19,7 @@
     height: min-content;
 }
 
-div.sidebar {
+.sidebar {
     flex: 1;
     padding: 1rem;
     display: flex;
@@ -35,7 +35,7 @@ div.sidebar {
     box-sizing: border-box;
 }
 
-div.sidebar-search {
+.sidebar-search {
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -43,26 +43,26 @@ div.sidebar-search {
     width: 100%;
 }
 
-div.search-query {
+.search-query {
     flex-basis: 90%;
     width: 100%;
     max-width: 100%;
 }
 
-div.search-query > input {
+.search-query > input {
     width: 100%;
 }
 
-div.search-button {
+.search-button {
     flex-basis: 10%;
     width: 100%;
 }
 
-div.sidebar-search input {
+.sidebar-search input {
     font-size: 1.8rem;
 }
 
-div.search-button > input {
+.search-button > input {
     background-color: aliceblue;
     height: 100%;
     width: 100%;
@@ -73,30 +73,30 @@ div.search-button > input {
     border-color: #808985;
 }
 
-div.search-button > input:hover {
+.search-button > input:hover {
     cursor: pointer;
 }
 
-div.sidebar-sort input {
+.sidebar-sort input {
     height: 1.5rem;
     width: 1.5rem;
 }
 
-div.sidebar-sort input:hover {
+.sidebar-sort input:hover {
     cursor: pointer;
 }
 
-div.sidebar-sort label {
+.sidebar-sort label {
     padding-left: 1rem;
     font-size: 1.2rem;
 }
 
-div.sidebar-create {
+.sidebar-create {
     margin: 1rem auto;
     text-align: center;
 }
 
-div.sidebar-create button {
+.sidebar-create button {
     width: auto;
     font-size: 2rem;
     padding: 0.5rem;
@@ -109,7 +109,7 @@ div.sidebar-create button {
                 border-width 0.2s ease-out;
 }
 
-div.sidebar-create button:hover {
+.sidebar-create button:hover {
     border-radius: 0.5rem;
     cursor: pointer;
 }
