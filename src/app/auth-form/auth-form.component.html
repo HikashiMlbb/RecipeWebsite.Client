@@ -1,1 +1,12 @@
-<h1>HELLOL, BLYAT</h1>
+<h1>{{ title }}</h1>
+<div class="form-content">
+    <h3>Введите имя пользователя:</h3>
+    <input [formControl]="username" type="text" name="" placeholder="Имя пользователя">
+    <h3>Введите пароль:</h3>
+    <input [formControl]="password" type="password" name="" placeholder="Пароль">
+</div>
+<div *ngIf="error" class="error-content">
+    <p>{{ error }}</p>
+</div>
+<button (click)="onSubmit()" type="submit">{{ label }}</button>
+<p class="alt-link"><a [routerLink]="altLink">{{ altLabel }}</a></p>
