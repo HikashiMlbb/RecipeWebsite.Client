@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RecipeCardComponent } from "../recipe-card/recipe-card.component";
-import { Recipe } from '@/services/recipes/recipe.interface';
+import { Recipe } from '@/services/interfaces/recipe';
 
 @Component({
   selector: 'app-recipes-layout',

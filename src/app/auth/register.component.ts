@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthFormComponent } from "../auth-form/auth-form.component";
 import { UserService } from '@/services/users/user.service';
-import { User } from '@/services/users/user.interface';
-import { UserResult } from '@/services/users/user-result.interface';
+import { UserAuth } from '@/services/users/interfaces/user-auth';
+import { UserResult } from '@/services/users/interfaces/user-result';
 import { Router } from '@angular/router';
 import { errorMap } from '@/auth/error-map';
 import { CookieService } from 'ngx-cookie-service';
@@ -24,9 +24,9 @@ import { CookieService } from 'ngx-cookie-service';
 export class RegisterComponent implements OnInit {
   protected error: string | null = null;
 
-  private service: UserService = inject(UserService);
-  private cookieService: CookieService = inject(CookieService);
-  private router: Router = inject(Router);
+  private readonly service: UserService = inject(UserService);
+  private readonly cookieService: CookieService = inject(CookieService);
+  private readonly router: Router = inject(Router);
 
   ngOnInit(): void {
     if (!this.cookieService.check('Access-Token')) return;
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
     this.redirectHome();
   }
 
-  protected onSubmit(user: User) {
+  protected onSubmit(user: UserAuth) {
     this.service.register(user)
       .subscribe((result: UserResult) => this.handleRegistration(result));
   }

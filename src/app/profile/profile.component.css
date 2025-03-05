@@ -1,0 +1,50 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    box-sizing: content-box;
+    width: 60vw;
+    margin: auto;
+    min-height: 30vh;
+    gap: 1rem;
+}
+
+h1.loading {
+    background-color: aliceblue;
+    margin: 1rem auto 1rem auto;
+    padding: 1rem 2rem;
+    text-align: center;
+    border: 0.4rem solid rgb(104, 164, 255);
+    width: min-content;
+    border-radius: 10rem;
+}
+
+div.main {
+    box-sizing: border-box;
+    border: .3rem solid rgb(104, 164, 255);
+    border-radius: 10rem;
+    background-color: aliceblue;
+    margin: 0.3rem auto;
+    width: 80%;
+    padding: 1rem 2rem;
+}
+
+.admin {
+    color: rgb(210, 20, 20)
+}
+
+.recipes {
+    box-sizing: border-box;
+    border: .3rem solid rgb(104, 164, 255);
+    margin: auto;
+    background-color: aliceblue;
+    padding: 1rem;
+    border-radius: 3rem;
+    width: 100%;
+}
+
+.recipes > h1 {
+    width: fit-content;
+    margin: auto;
+    padding: 0 0 1rem 0;
+}

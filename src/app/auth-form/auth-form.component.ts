@@ -1,18 +1,18 @@
-import { User } from '@/services/users/user.interface';
+import { UserAuth } from '@/services/users/interfaces/user-auth';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormControl, FormControlName, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth-form',
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.css'
 })
 export class AuthFormComponent implements OnInit, OnDestroy {
-  private subscribtions: Subscription[] = [];
+  private readonly subscribtions: Subscription[] = [];
 
   @Input({ required: true }) title!: string;
   @Input({ required: true }) label!: string;
@@ -21,7 +21,7 @@ export class AuthFormComponent implements OnInit, OnDestroy {
   @Input({ required: true }) error!: string | null;
   @Output() errorChange: EventEmitter<string | null> = new EventEmitter<string | null>();
 
-  @Output("submit") submitEmitter: EventEmitter<User> = new EventEmitter<User>();
+  @Output("submit") submitEmitter: EventEmitter<UserAuth> = new EventEmitter<UserAuth>();
 
   protected username = new FormControl<string>("");
   protected password = new FormControl<string>("");
@@ -41,5 +41,6 @@ export class AuthFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitEmitter.emit({ username: this.username.value!, password: this.password.value! });
+    this.password.setValue('');
   }
 }

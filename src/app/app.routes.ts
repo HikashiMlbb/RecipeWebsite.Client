@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from '@/auth/login.component';
 import { RegisterComponent } from '@/auth/register.component';
-import { ProfileComponent } from '@/profile/profile.component';
+import { routes as profileRoutes } from '@/profile/profile.routes';
 
 export const routes: Routes = [
     {
@@ -13,7 +13,8 @@ export const routes: Routes = [
     {
         path: "home", 
         component: HomeComponent,
-        pathMatch: "full"
+        pathMatch: "full",
+        title: "Кулинарный дневник"
     },
     {
         path: "login",
@@ -29,14 +30,7 @@ export const routes: Routes = [
     },
     {
         path: "profile",
-        component: ProfileComponent,
-        pathMatch: "full",
-        title: "Мой профиль"
-    },
-    {
-        path: "profile/:userId",
-        component: ProfileComponent,
-        pathMatch: "full"
+        children: profileRoutes
     },
     {
         path: "**",

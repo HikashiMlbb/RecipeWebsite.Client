@@ -1,9 +1,9 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterLink, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { RecipesLayoutComponent } from "../recipes-layout/recipes-layout.component";
-import { of, tap, finalize, catchError, filter, Observable, Subscription } from 'rxjs';
+import { finalize, filter, Observable, Subscription } from 'rxjs';
 import { RecipeService } from '@/services/recipes/recipe.service';
-import { Recipe } from '@/services/recipes/recipe.interface';
+import { Recipe } from '@/services/interfaces/recipe';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -14,24 +14,23 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  readonly sortTypes = {
+  @ViewChild("form") form!: NgForm;
+  protected readonly sortTypes = {
     popular: "popular",
     newest: "newest"
   }
+  protected recipes: Array<Recipe> = [];
+  protected chosenSort: string = this.sortTypes.popular;
+  protected isFinished: boolean = false;
+  protected query!: string;
 
   private readonly pageSize: number = 6;
-  private service: RecipeService = inject(RecipeService);
+  private readonly service: RecipeService = inject(RecipeService);
   private routerEventSubscription!: Subscription;
   private pageCounter: number = 1;
   private isQuery: boolean = false;
   private isFinalPage: boolean = false;
   private isScrolling: boolean = false;
-
-  @ViewChild("form") form!: NgForm;
-  recipes: Array<Recipe> = [];
-  chosenSort: string = this.sortTypes.popular;
-  isFinished: boolean = false;
-  query!: string;
 
   constructor (private router: Router) {}
 

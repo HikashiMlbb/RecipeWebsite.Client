@@ -1,9 +1,9 @@
 <h1>{{ title }}</h1>
 <div class="form-content">
     <h3>Введите имя пользователя:</h3>
-    <input [formControl]="username" type="text" name="" placeholder="Имя пользователя">
+    <input [formControl]="username" (keydown.enter)="onSubmit()" type="text" placeholder="Имя пользователя">
     <h3>Введите пароль:</h3>
-    <input [formControl]="password" type="password" name="" placeholder="Пароль">
+    <input [formControl]="password" (keydown.enter)="onSubmit()" type="password" placeholder="Пароль">
 </div>
 <div *ngIf="error" class="error-content">
     <p>{{ error }}</p>
