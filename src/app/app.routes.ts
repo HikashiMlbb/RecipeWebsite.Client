@@ -3,6 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from '@/auth/login.component';
 import { RegisterComponent } from '@/auth/register.component';
 import { routes as profileRoutes } from '@/profile/profile.routes';
+import { CreateComponent } from '@/create/create.component';
 
 export const routes: Routes = [
     {
@@ -31,6 +32,10 @@ export const routes: Routes = [
     {
         path: "profile",
         children: profileRoutes
+    },
+    {
+        path: "create",
+        component: CreateComponent
     },
     {
         path: "**",
