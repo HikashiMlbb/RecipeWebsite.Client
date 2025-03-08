@@ -1,0 +1,133 @@
+<form [formGroup]="recipe" (ngSubmit)="onSubmit()">
+    <h1 class="title">Создать рецепт</h1>
+    <div class="recipe-content">
+        <label>Введите название рецепта:</label>
+        <input
+            [class.error-input]="recipe.controls['title'].invalid && recipe.controls['title'].touched"
+            formControlName="title" 
+            type="text" 
+            placeholder="Введите название" />
+        <span *ngIf="recipe.controls['title'].invalid && recipe.controls['title'].touched" class="error">
+            Длина названия рецепта должна составлять от {{ constraints.titleMinLength }} до {{ constraints.titleMaxLength }} символов.
+        </span>
+    </div>
+    <div class="recipe-content">
+        <label>Выберите изображение блюда:</label>
+        <label class="file-label-success" *ngIf="isFileChosen">Изображение выбрано!</label>
+        <label class="file-label" *ngIf="!isFileChosen">Изображение ещё не выбрано.</label>
+        <input style="display: none;" accept="image/png, image/jpeg" type="file" #fileUpload (change)="onFileUploaded($event)" />
+        <input 
+            [class.error-input]="recipe.controls['image'].invalid && recipe.controls['image'].touched" 
+            class="file-input" 
+            type="button" 
+            value="Выбрать файл... 📎" 
+            (click)="fileUpload.click()" />
+        <span class="error" *ngIf="recipe.controls['image'].invalid && recipe.controls['image'].touched">
+            Пожалуйста, выберите изображение, которое будет отображаться в списке рецептов.
+        </span>
+    </div>
+    <div class="recipe-content">
+        <label>Опишите рецепт:</label>
+        <textarea 
+            [class.error-input]="recipe.controls['description'].invalid && recipe.controls['description'].touched"
+            formControlName="description" 
+            placeholder="Введите описание рецепта">
+        </textarea>
+        <span *ngIf="recipe.controls['description'].invalid && recipe.controls['description'].touched" class="error">
+            Длина описания рецепта должна составлять от {{ constraints.descriptionMinLength }} до {{ constraints.descriptionMaxLength }} символов.
+        </span>
+    </div>
+    <div class="recipe-content">
+        <label>Выберите сложность рецепта:</label>
+        <select 
+            [class.error-input]="recipe.controls['difficulty'].invalid && recipe.controls['difficulty'].touched"
+            formControlName="difficulty">
+            <option value="easy">Легко 🔥</option>
+            <option value="medium">Средне 🔥🔥🔥</option>
+            <option value="hard">Сложно 🔥🔥🔥🔥🔥</option>
+        </select>
+        <span *ngIf="recipe.controls['difficulty'].invalid && recipe.controls['difficulty'].touched" class="error">
+            Выбрать сложность вашего рецепта необходимо для его создания.
+        </span>
+    </div>
+    <div class="recipe-content">
+        <label>Укажите длительность готовки:</label>
+        <div class="cooking-timespan">
+            <div>
+                <input
+                    [class.error-input]="recipe.controls['hours'].invalid && recipe.controls['hours'].touched"
+                    formControlName="hours" 
+                    placeholder="Часы" 
+                    type="text" />
+                <label>часов</label>
+            </div>
+            <div>
+                <input
+                    [class.error-input]="recipe.controls['minutes'].invalid && recipe.controls['minutes'].touched"
+                    formControlName="minutes"
+                    placeholder="Минуты"
+                    type="text" />
+                <label>минут</label>
+            </div>
+        </div>
+        <span class="error" *ngIf="recipe.controls['hours'].invalid && recipe.controls['hours'].touched">
+            Обязательно укажите, сколько часов нужно готовить по вашему рецепту. Допустимо указать от {{ constraints.minHours }} до {{ constraints.maxHours }} часов.
+        </span>
+        <span class="error" *ngIf="recipe.controls['minutes'].invalid && recipe.controls['minutes'].touched">
+            Обязательно укажите, сколько минут нужно готовить по вашему рецепту. Допустимо указать от {{ constraints.minMinutes }} до {{ constraints.maxMinutes }} минут.
+        </span>
+    </div>
+    <div formArrayName="ingredients" class="recipe-content ingredient-list">
+        <label>Перечислите ингредиенты для вашего рецепта:</label>
+        <div 
+        *ngFor="let ingredient of ingredients.controls; let i = index;" 
+        [formGroupName]="i" 
+        class="ingredient-content">
+            <div class="ingredient-content-form">
+                <input 
+                    [class.error-input]="ingredients.at(i).get('name')?.invalid && ingredients.at(i).get('name')?.touched"
+                    formControlName="name" 
+                    class="ingredient-title" 
+                    type="text" 
+                    placeholder="Название" />
+                <input 
+                    [class.error-input]="ingredients.at(i).get('count')?.invalid && ingredients.at(i).get('count')?.touched"
+                    formControlName="count" 
+                    class="ingredient-count" 
+                    type="text" 
+                    placeholder="Кол-во" />
+                <select formControlName="type" class="ingredient-type">
+                    <option value="grams">Грамм</option>
+                    <option value="milliliters">Миллилитров</option>
+                    <option value="pieces">Штук</option>
+                    <option value="cups">Стаканов</option>
+                </select>
+            </div>
+            <span *ngIf="ingredients.at(i).get('name')?.invalid && ingredients.at(i).get('name')?.touched" class="error">
+                Название ингредиента должно сотавлять не менее {{ constraints.ingredientNameMinLength }} символов, но не более {{ constraints.ingredientNameMaxLength }} символов.
+            </span>
+            <span *ngIf="ingredients.at(i).get('count')?.invalid && ingredients.at(i).get('count')?.touched" class="error">
+                Количество должно быть в пределах от {{ constraints.ingredientMinCount }} до {{ constraints.ingredientMaxCount.toLocaleString().replaceAll(',', '.') }}.
+            </span>
+        </div>
+        <div class="ingredient-content-control">
+            <input (click)="deleteIngredient()" class="delete" type="button" value="Удалить" />
+            <input (click)="addIngredient()" class="add" type="button" value="Добавить" />
+        </div>
+    </div>
+    <div class="recipe-content">
+        <label>Подробно расскажите, как приготовить:</label>
+        <textarea 
+            [class.error-input]="recipe.controls['instruction'].invalid && recipe.controls['instruction'].touched"
+            formControlName="instruction" 
+            placeholder="Введите подробную инструкцию к приготовлению">
+        </textarea>
+        <span class="error" *ngIf="recipe.controls['instruction'].invalid && recipe.controls['instruction'].touched">
+            Длина инструкции должна составлять от {{ constraints.instructionMinLength }} до {{ constraints.instructionMaxLength }} символов.
+        </span>
+    </div>
+    <span *ngIf="isFormError" class="error">
+        Произошла неизвестная ошибка. Пожалуйста, повторите попытку позже.
+    </span>
+    <input [disabled]="isSubmitting" type="submit" value="Создать" />
+</form>

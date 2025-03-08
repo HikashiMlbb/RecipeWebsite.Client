@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { Recipe } from '../interfaces/recipe'
 import { HttpClient } from '@angular/common/http';
 import { mapRecipeDetails } from '@/services/mapping.utils';
@@ -17,6 +17,14 @@ export class RecipeService {
   fetchRecipesByQuery(query: string): Observable<Array<Recipe>> {
     let observable = this.http.get<Array<Recipe>>(`${API_URL}/api/recipes/search`, { params: { "query": query } });
     return this.pipeResults(observable);
+  }
+
+  create(data: FormData): Observable<number> {
+    return this.http
+      .post<number>(`${API_URL}/api/recipes`, data, { withCredentials: true })
+      .pipe(
+        catchError((): Observable<number> => of(NaN))
+      );
   }
 
   private pipeResults(observable: Observable<Array<Recipe>>): Observable<Array<Recipe>> {

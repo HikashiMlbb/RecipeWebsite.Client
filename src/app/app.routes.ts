@@ -30,12 +30,13 @@ export const routes: Routes = [
         title: "Регистрация профиля"
     },
     {
-        path: "profile",
-        children: profileRoutes
+        path: "create",
+        component: CreateComponent,
+        title: "Создать рецепт"
     },
     {
-        path: "create",
-        component: CreateComponent
+        path: "profile",
+        children: profileRoutes
     },
     {
         path: "**",
