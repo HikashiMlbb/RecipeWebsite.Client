@@ -4,6 +4,7 @@ import { Recipe } from '../interfaces/recipe'
 import { HttpClient } from '@angular/common/http';
 import { mapRecipeDetails } from '@/services/mapping.utils';
 import { API_URL } from '@/services/config';
+import { DetailedRecipe } from '@/services/recipes/interfaces/detailed-recipe';
 
 @Injectable({ providedIn: 'root', deps: [ HttpClient ] })
 export class RecipeService {
@@ -25,6 +26,15 @@ export class RecipeService {
       .pipe(
         catchError((): Observable<number> => of(NaN))
       );
+  }
+
+  fetchById(id: number): Observable<DetailedRecipe | null> {
+    return this.http
+      .get<DetailedRecipe>(`${API_URL}/api/recipes/${id}`, { withCredentials: true })
+      .pipe(
+        map((recipe): DetailedRecipe => mapRecipeDetails(recipe)),
+        catchError(() => of(null))
+      )
   }
 
   private pipeResults(observable: Observable<Array<Recipe>>): Observable<Array<Recipe>> {
