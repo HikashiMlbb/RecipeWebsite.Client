@@ -20,6 +20,8 @@ h1.loading {
 }
 
 div.main {
+    display: flex;
+    flex-direction: row;
     box-sizing: border-box;
     border: .3rem solid rgb(104, 164, 255);
     border-radius: 10rem;
@@ -27,6 +29,32 @@ div.main {
     margin: 0.3rem auto;
     width: 80%;
     padding: 1rem 2rem;
+}
+
+div.main > div:first-child {
+    flex: 5;
+}
+
+div.main > div:last-child {
+    flex: 1;
+}
+
+div.main input {
+    --red: rgb(210, 20, 20);
+    font-size: 2rem;
+    background-color: aliceblue;
+    border: .3rem solid var(--red);
+    border-radius: 2rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: block;
+    margin-left: auto;
+}
+
+div.main input:hover {
+    background-color: var(--red);
+    color: white;
 }
 
 .admin {

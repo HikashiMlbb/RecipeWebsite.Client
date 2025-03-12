@@ -51,6 +51,11 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     setTimeout(() => this.isLoading = false, this.renderDelayMs);
   }
 
+  protected onClick(): void {
+    this.cookieService.delete('Access-Token');
+    this.router.navigate([ 'login' ]);
+  }
+
   private handleForeignProfile() {
     let userId = this.activatedRoute.snapshot.paramMap.get('userId');
     this.findUserId(Number(userId));
