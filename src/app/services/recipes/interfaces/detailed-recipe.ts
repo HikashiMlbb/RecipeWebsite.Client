@@ -1,5 +1,6 @@
 import { Ingredient } from "@/services/recipes/interfaces/ingredient";
 import { UserPreview } from "@/services/recipes/interfaces/user-preview";
+import { Comment } from "@/services/recipes/interfaces/comment";
 
 export interface DetailedRecipe {
     id: number;
@@ -12,7 +13,8 @@ export interface DetailedRecipe {
     cookingTime: string;
     isModifyAllowed: boolean;
     rating: number;
+    votes: number;
     userRate: number;
     ingredients: Array<Ingredient>;
-    comments: Array<unknown>;
+    comments: Array<Comment>;
 }
