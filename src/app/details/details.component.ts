@@ -66,4 +66,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       ["difficulty-hard"]: this.recipe.difficulty == 5
     });
   }
+
+  protected get cookingTime(): string {
+    return this.recipeService.getCookingTime(this.recipe.cookingTime);
+  }
 }

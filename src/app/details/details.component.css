@@ -34,6 +34,11 @@ a {
     color: blue;
 }
 
+p {
+    width: 100%;
+    word-wrap: break-word;
+}
+
 .loading { 
     border: .4rem solid var(--default-border-color);
     border-radius: 2rem;
@@ -146,6 +151,19 @@ a {
 
 form {
     border-bottom: .2rem solid black;
+}
+
+form input {
+    border: 0.3rem solid var(--default-border-color);
+    border-radius: 1rem;
+    background-color: aliceblue;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+form input:hover {
+    background-color: var(--default-border-color);
+    color: white;
 }
 
 .comment {
