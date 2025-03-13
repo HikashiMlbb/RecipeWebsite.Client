@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Recipe } from '../interfaces/recipe'
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { mapRecipeDetails } from '@/services/mapping.utils';
 import { API_URL } from '@/services/config';
 import { DetailedRecipe } from '@/services/recipes/interfaces/detailed-recipe';
 import moment from 'moment';
+import { Comment } from '@/services/recipes/interfaces/comment';
 
 @Injectable({ providedIn: 'root', deps: [ HttpClient ] })
 export class RecipeService {
@@ -36,6 +37,12 @@ export class RecipeService {
         map((recipe): DetailedRecipe => mapRecipeDetails(recipe)),
         catchError(() => of(null))
       )
+  }
+
+  comment(id: number, content: string): Observable<Comment> {
+    const params = new HttpParams().set('content', content);
+
+    return this.http.post<Comment>(`${API_URL}/api/recipes/${id}/comment`, params, { withCredentials: true })
   }
 
   getCookingTime(cookingTime: string): string {

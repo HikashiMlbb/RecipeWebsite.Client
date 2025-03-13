@@ -175,3 +175,11 @@ form input:hover {
     border-radius: 2rem;
     padding: 1rem;
 }
+
+.error-input {
+    border-color: red;
+}
+
+.error {
+    color: red;
+}

@@ -39,9 +39,15 @@
     </div>
     <div class="comments">
         <h1>Комментарии</h1>
-        <form>
-            <textarea placeholder="Введите ваш комментарий"></textarea>
-            <input type="button" value="Оставить комментарий">
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+            <textarea
+                [class.error-input]="commentForm.get('comment')!.invalid && commentForm.get('comment')!.touched"
+                formControlName="comment" 
+                placeholder="Введите ваш комментарий"></textarea>
+            <p class="error" *ngIf="commentForm.get('comment')!.invalid && commentForm.get('comment')!.touched">
+                Максимальная длина комментария составляет {{ maxCommentLength }} символов, а также не может быть пустым.
+            </p>
+            <input type="submit" value="Оставить комментарий">
         </form>
         <div *ngIf="recipe.comments.length == 0">
             <h2>Комментариев пока что нет...</h2>

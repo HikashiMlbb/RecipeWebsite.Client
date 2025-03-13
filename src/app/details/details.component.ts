@@ -2,24 +2,32 @@ import { DetailedRecipe } from '@/services/recipes/interfaces/detailed-recipe';
 import { RecipeService } from '@/services/recipes/recipe.service';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-details',
-  imports: [NgIf, NgFor, NgClass, FormsModule, RouterLink],
+  imports: [NgIf, NgFor, NgClass, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
 export class DetailsComponent implements OnInit, AfterViewInit {
   protected recipe!: DetailedRecipe;
   protected isLoading: boolean = true;
+  protected commentForm: FormGroup;
 
   private readonly recipeService: RecipeService = inject(RecipeService);
   private readonly router: Router = inject(Router);
   private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
+  protected readonly maxCommentLength: number = 1500;
   private readonly renderDelayMs: number = 250;
+
+  constructor (fb: FormBuilder) {
+    this.commentForm = fb.group({
+      comment: fb.control("", [ Validators.required, Validators.maxLength(this.maxCommentLength), Validators.pattern(/[^\s]/)])
+    })
+  }
 
   ngOnInit(): void {
     let recipeIdParam = this.activatedRoute.snapshot.paramMap.get('recipeId')!;
@@ -57,6 +65,21 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     ]);
 
     return map.get(type.toLowerCase())!;
+  }
+
+  protected onSubmit(): void {
+    if (this.commentForm.invalid) {
+      this.commentForm.markAllAsTouched();
+      return;
+    }
+
+    this.recipeService
+      .comment(this.recipe.id, this.commentForm.get('comment')!.value)
+      .subscribe(comment => {
+        this.recipe.comments = [ comment, ...this.recipe.comments ];
+        this.commentForm.reset();
+      })
+
   }
 
   protected get difficultyClasses(): object {
