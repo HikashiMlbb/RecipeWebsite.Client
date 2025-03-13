@@ -45,6 +45,12 @@ export class RecipeService {
     return this.http.post<Comment>(`${API_URL}/api/recipes/${id}/comment`, params, { withCredentials: true })
   }
 
+  rate(id: number, star: number): Observable<number> {
+    const params = new HttpParams().set('stars', star);
+
+    return this.http.post<number>(`${API_URL}/api/recipes/${id}/rate`, params, { withCredentials: true });
+  }
+
   getCookingTime(cookingTime: string): string {
     let duration = moment.duration(cookingTime);
     let result: Array<string> = [];

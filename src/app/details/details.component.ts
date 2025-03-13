@@ -4,6 +4,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-details',
@@ -13,19 +14,26 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 })
 export class DetailsComponent implements OnInit, AfterViewInit {
   protected recipe!: DetailedRecipe;
+  protected starsCount: Array<number> = new Array(5);
   protected isLoading: boolean = true;
   protected commentForm: FormGroup;
-
+  protected isAuthenticated: boolean = false;
+  protected isUserAuthor: boolean = false;
+  
   private readonly recipeService: RecipeService = inject(RecipeService);
   private readonly router: Router = inject(Router);
   private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-
+  private readonly cookieService: CookieService = inject(CookieService);
+  
   protected readonly maxCommentLength: number = 1500;
   private readonly renderDelayMs: number = 250;
 
+  private currentStar: number = -1;
+  private currentStarHovered: number = -1;
+
   constructor (fb: FormBuilder) {
     this.commentForm = fb.group({
-      comment: fb.control("", [ Validators.required, Validators.maxLength(this.maxCommentLength), Validators.pattern(/[^\s]/)])
+      comment: fb.control([""], [ Validators.required, Validators.maxLength(this.maxCommentLength), Validators.pattern(/[^\s]/)])
     })
   }
 
@@ -39,7 +47,18 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     }
 
     this.recipeService.fetchById(Number(recipeId))
-      .subscribe(data => data ? this.recipe = data : this.router.navigate([ '/home' ]));
+      .subscribe(data => {
+        if (!data) {
+          this.router.navigate([ '/home' ]);
+          return;
+        }
+
+        this.recipe = data;
+        this.currentStar = data.userRate - 1;
+        this.isUserAuthor = data.isModifyAllowed;
+      });
+
+    this.isAuthenticated = this.cookieService.check('Access-Token');
   }
 
   ngAfterViewInit(): void {
@@ -65,6 +84,26 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     ]);
 
     return map.get(type.toLowerCase())!;
+  }
+
+  protected starRateClicked(index: number): void {
+    if (!this.isAuthenticated || this.isUserAuthor) return;
+    this.currentStar = index == this.currentStar ? -1 : index;
+ 
+    this.recipeService.rate(this.recipe.id, this.currentStar + 1).subscribe(star => this.currentStar = star - 1);
+  }
+
+  protected starRateHovered(index: number): void {
+    if (!this.isAuthenticated || this.isUserAuthor) return;
+    this.currentStarHovered = index;
+  }
+
+  protected getStarClass(index: number): boolean {
+    if (this.currentStarHovered !== -1) {
+      return index <= this.currentStarHovered;
+    }
+
+    return index <= this.currentStar;
   }
 
   protected onSubmit(): void {

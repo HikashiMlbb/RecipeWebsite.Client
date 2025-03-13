@@ -65,6 +65,16 @@ p {
     flex: 1;
 }
 
+.rate-view {
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+}
+
+.rate-view > small {
+    font-size: .5em;
+}
+
 .image {
     align-self: center;
 }
@@ -182,4 +192,21 @@ form input:hover {
 
 .error {
     color: red;
+}
+
+svg.disabled {
+    cursor:not-allowed !important;
+}
+
+svg.star {
+    fill: none; 
+    stroke: gold; 
+    stroke-width: 70;
+    cursor: pointer;
+}
+
+svg.fired {
+    fill: gold;
+    stroke: #553;
+    stroke-width: 50;
 }
