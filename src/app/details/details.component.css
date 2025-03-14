@@ -96,7 +96,7 @@ p {
     padding-bottom: 1rem;
 }
 
-.modify > input {
+.modify input {
     font-size: 2rem;
     border: 0.2rem solid black;
     border-radius: 2rem;
@@ -106,12 +106,12 @@ p {
     transition: all 0.2s ease;
 }
 
-.modify > input:first-child {
+.modify input:first-child {
     --change-color: #008CBA;
     border-color: var(--change-color);
 }
 
-.modify > input:first-child:hover {
+.modify input:first-child:hover {
     background-color: var(--change-color);
     color: aliceblue;
 }

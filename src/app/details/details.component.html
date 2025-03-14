@@ -10,7 +10,7 @@
             </div>
             <div class="header-content">
                 <div *ngIf="recipe.isModifyAllowed" class="modify">
-                    <input type="button" value="Изменить">
+                    <a [routerLink]="['/edit', recipe.id]"><input type="button" value="Изменить" /></a>
                     <input (click)="deleteRecipe()" type="button" [value]="isDeletingSure ? 'Вы уверены?' : 'Удалить'">
                 </div>
                 <p>Автор рецепта: <a [routerLink]="['/profile', recipe.author.id]">{{ recipe.author.username }}</a></p>
