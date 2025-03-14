@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchRecipes()
       .pipe(finalize(() => this.isScrolling = false))
       .subscribe(data => {
+        if (data.length < this.pageSize) this.isFinalPage = true;
         this.recipes = [...this.recipes, ...data];
       });
   }
