@@ -19,6 +19,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   protected commentForm: FormGroup;
   protected isAuthenticated: boolean = false;
   protected isUserAuthor: boolean = false;
+  protected isDeletingSure: boolean = false;
   
   private readonly recipeService: RecipeService = inject(RecipeService);
   private readonly router: Router = inject(Router);
@@ -27,6 +28,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   
   protected readonly maxCommentLength: number = 1500;
   private readonly renderDelayMs: number = 250;
+  private readonly deletingSureDelayMs: number = 3000;
 
   private currentStar: number = -1;
   private currentStarHovered: number = -1;
@@ -104,6 +106,27 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     }
 
     return index <= this.currentStar;
+  }
+
+  protected deleteRecipe() {
+    // First click
+    if (!this.isDeletingSure) {
+      this.isDeletingSure = true;
+      setTimeout(() => this.isDeletingSure = false, this.deletingSureDelayMs);
+      return;
+    }
+
+    // Sure deleting
+    this.recipeService
+      .delete(this.recipe.id)
+      .subscribe(result => {
+        if (!result) {
+          console.error('Произошла неизвестная ошибка во время удаления рецепта.');
+          return;
+        }
+
+        this.router.navigate([ '/home' ]);
+      });
   }
 
   protected onSubmit(): void {

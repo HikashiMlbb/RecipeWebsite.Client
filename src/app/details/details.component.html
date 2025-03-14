@@ -11,7 +11,7 @@
             <div class="header-content">
                 <div *ngIf="recipe.isModifyAllowed" class="modify">
                     <input type="button" value="Изменить">
-                    <input type="button" value="Удалить">
+                    <input (click)="deleteRecipe()" type="button" [value]="isDeletingSure ? 'Вы уверены?' : 'Удалить'">
                 </div>
                 <p>Автор рецепта: <a [routerLink]="['/profile', recipe.author.id]">{{ recipe.author.username }}</a></p>
                 <p>Оценка: <b>{{ recipe.rating }}</b>🌟 ({{ recipe.votes }} оценок)</p>
@@ -30,7 +30,8 @@
                         xmlns="http://www.w3.org/2000/svg">
                         <polygon points="400,50 500,300 750,300 550,500 650,750 400,600 150,750 250,500 50,300 300,300" />
                     </svg>
-                    <small *ngIf="isUserAuthor">вы не можете поставить себе оценку :3</small>
+                    <small *ngIf="!isAuthenticated">войдите в систему, чтобы оценить :3`</small>
+                    <small *ngIf="isAuthenticated && isUserAuthor">вы не можете поставить себе оценку :3</small>
                 </p>
                 <p>Сложность рецепта: <b [ngClass]="difficultyClasses">{{ viewRecipeDifficulty() }}</b></p>
                 <p>Длительность готовки: {{ cookingTime }}</p>

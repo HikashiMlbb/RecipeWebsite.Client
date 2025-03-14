@@ -51,6 +51,15 @@ export class RecipeService {
     return this.http.post<number>(`${API_URL}/api/recipes/${id}/rate`, params, { withCredentials: true });
   }
 
+  delete(id: number): Observable<boolean> {
+    return this.http
+      .delete(`${API_URL}/api/recipes/${id}`, { withCredentials: true })
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
+  }
+
   getCookingTime(cookingTime: string): string {
     let duration = moment.duration(cookingTime);
     let result: Array<string> = [];
