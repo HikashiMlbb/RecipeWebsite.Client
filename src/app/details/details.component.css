@@ -1,0 +1,212 @@
+:host {
+    --default-border-color: rgb(104, 164, 255);
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    margin: auto;
+}
+
+:host > div {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    padding: 1rem;
+    border: 0.5rem solid var(--default-border-color);
+    border-radius: 2rem;
+    background-color: aliceblue;
+    font-size: 1.5rem;
+}
+
+:host > div > h1 {
+    text-align: left;
+    padding-bottom: 1rem;
+    border-bottom: 0.2rem solid black;
+    word-wrap: break-word;
+    font-size: 3rem;
+}
+
+:host > div > h1::before {
+    content: "\00a0\00a0\00a0\00a0";
+}
+
+a {
+    color: blue;
+}
+
+p {
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.loading { 
+    border: .4rem solid var(--default-border-color);
+    border-radius: 2rem;
+    box-sizing: content-box;
+    width: fit-content;
+    margin: 30vh auto;
+    background-color: aliceblue;
+}
+
+.loading h1 {
+    padding: 3rem 9rem 3rem 9rem;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+    height: fit-content;
+    font-size: 1.25em;
+}
+
+.header > div {
+    flex: 1;
+}
+
+.rate-view {
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+}
+
+.rate-view > small {
+    font-size: .5em;
+}
+
+.image {
+    align-self: center;
+}
+
+.image > img {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    border: .2rem solid var(--default-border-color);
+    object-fit: cover;
+}
+
+.modify {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    column-gap: 2rem;
+    padding-bottom: 1rem;
+}
+
+.modify input {
+    font-size: 2rem;
+    border: 0.2rem solid black;
+    border-radius: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    background-color: aliceblue;
+    transition: all 0.2s ease;
+}
+
+.modify input:first-child {
+    --change-color: #008CBA;
+    border-color: var(--change-color);
+}
+
+.modify input:first-child:hover {
+    background-color: var(--change-color);
+    color: aliceblue;
+}
+
+.modify > input:last-child {
+    --delete-color: #f44336;
+    border-color: var(--delete-color);
+}
+
+.modify > input:last-child:hover {
+    background-color: var(--delete-color);
+    color: aliceblue;
+}
+
+.difficulty-easy {
+    color: green;
+}
+
+.difficulty-medium {
+    color: orangered;
+}
+
+.difficulty-hard {
+    color: red;
+}
+
+.ingredients > ul {
+    list-style-position: inside;
+    list-style-type: disc;
+}
+
+.comments textarea {
+    resize: none;
+    width: 100%;
+    height: fit-content;
+    font-size: 1.75rem;
+    min-height: 10rem;
+}
+
+.comments input {
+    font-size: 1.75rem;
+    padding: .5rem;
+    margin: .5rem auto;
+    width: fit-content;
+    display: block;
+}
+
+form {
+    border-bottom: .2rem solid black;
+}
+
+form input {
+    border: 0.3rem solid var(--default-border-color);
+    border-radius: 1rem;
+    background-color: aliceblue;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+form input:hover {
+    background-color: var(--default-border-color);
+    color: white;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    box-sizing: border-box;
+    border: .25rem solid var(--default-border-color);
+    border-radius: 2rem;
+    padding: 1rem;
+}
+
+.error-input {
+    border-color: red;
+}
+
+.error {
+    color: red;
+}
+
+svg.disabled {
+    cursor:not-allowed !important;
+}
+
+svg.star {
+    fill: none; 
+    stroke: gold; 
+    stroke-width: 70;
+    cursor: pointer;
+}
+
+svg.fired {
+    fill: gold;
+    stroke: #553;
+    stroke-width: 50;
+}

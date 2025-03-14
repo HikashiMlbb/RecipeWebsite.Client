@@ -1,4 +1,4 @@
-import { RecipeCardService } from '@/recipe-card/recipe-card.service';
+import { RecipeService } from '@/services/recipes/recipe.service';
 import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -12,7 +12,7 @@ export class RecipeCardComponent {
   private readonly _difficultyIcon: string = "🔥";
   private readonly _ratingIcon: string = "🌟";
 
-  private readonly _service: RecipeCardService = inject(RecipeCardService);
+  private readonly _service: RecipeService = inject(RecipeService);
 
   @Input({ required: true }) recipeId!: number;
   @Input({ required: true }) title!: string;

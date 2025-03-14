@@ -4,6 +4,7 @@ import { LoginComponent } from '@/auth/login.component';
 import { RegisterComponent } from '@/auth/register.component';
 import { routes as profileRoutes } from '@/profile/profile.routes';
 import { CreateComponent } from '@/create/create.component';
+import { DetailsComponent } from '@/details/details.component';
 
 export const routes: Routes = [
     {
@@ -37,6 +38,11 @@ export const routes: Routes = [
     {
         path: "profile",
         children: profileRoutes
+    },
+    {
+        path: "details/:recipeId",
+        component: DetailsComponent,
+        title: "Подробности рецепта"
     },
     {
         path: "**",

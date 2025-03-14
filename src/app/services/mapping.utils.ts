@@ -1,5 +1,4 @@
 import { API_URL } from "@/services/config";
-import { Recipe } from "@/services/interfaces/recipe";
 
 const difficultyMapper: Map<number, number> = new Map([
     [1, 1],
@@ -7,7 +6,7 @@ const difficultyMapper: Map<number, number> = new Map([
     [3, 5]
 ]);
 
-export const mapRecipeDetails = (recipe: Recipe): Recipe => ({ 
+export const mapRecipeDetails = <T extends { image: string; difficulty: number; }>(recipe: T): T => ({ 
     ...recipe,
     image: `${API_URL}/static/${recipe.image}?v=${Date.now()}`,
     difficulty: difficultyMapper.get(recipe.difficulty)!

@@ -1,0 +1,89 @@
+<div *ngIf="recipe && !isLoading; then content; else loading"></div>
+
+<!-- Content -->
+<ng-template #content>
+    <div class="recipe">
+        <h1>{{ recipe.title }}</h1>
+        <div class="header">
+            <div class="image">
+                <img [src]="recipe.image" >
+            </div>
+            <div class="header-content">
+                <div *ngIf="recipe.isModifyAllowed" class="modify">
+                    <a [routerLink]="['/edit', recipe.id]"><input type="button" value="Изменить" /></a>
+                    <input (click)="deleteRecipe()" type="button" [value]="isDeletingSure ? 'Вы уверены?' : 'Удалить'">
+                </div>
+                <p>Автор рецепта: <a [routerLink]="['/profile', recipe.author.id]">{{ recipe.author.username }}</a></p>
+                <p>Оценка: <b>{{ recipe.rating }}</b>🌟 ({{ recipe.votes }} оценок)</p>
+                <p class="rate-view">Ваша оценка:
+                    <svg
+                        class="star"
+                        [class.disabled]="!isAuthenticated || isUserAuthor" 
+                        *ngFor="let _ of starsCount; index as i" 
+                        (click)="starRateClicked(i)"
+                        [class.fired]="getStarClass(i)"
+                        (mouseover)="starRateHovered(i)"
+                        (mouseout)="starRateHovered(-1)"
+                        height="30" 
+                        width="30" 
+                        viewBox="0 0 800 800" 
+                        xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="400,50 500,300 750,300 550,500 650,750 400,600 150,750 250,500 50,300 300,300" />
+                    </svg>
+                    <small *ngIf="!isAuthenticated">войдите в систему, чтобы оценить :3`</small>
+                    <small *ngIf="isAuthenticated && isUserAuthor">вы не можете поставить себе оценку :3</small>
+                </p>
+                <p>Сложность рецепта: <b [ngClass]="difficultyClasses">{{ viewRecipeDifficulty() }}</b></p>
+                <p>Длительность готовки: {{ cookingTime }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="description">
+        <h1>Описание</h1>
+        <p>{{ recipe.description }}</p>
+    </div>
+    <div class="ingredients">
+        <h1>Ингредиенты</h1>
+        <ul>
+            <li *ngFor="let ingredient of recipe.ingredients">
+                    <span>{{ ingredient.name }} - {{ ingredient.count }} {{ viewIngredientMeasurementType(ingredient.measurementUnit) }}</span>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h1>Инструкция к приготовлению</h1>
+        <p>{{ recipe.instruction }}</p>
+    </div>
+    <div class="comments">
+        <h1>Комментарии</h1>
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+            <textarea
+                [readOnly]="!isAuthenticated"
+                [class.error-input]="commentForm.get('comment')!.invalid && commentForm.get('comment')!.touched && isAuthenticated"
+                formControlName="comment" 
+                [placeholder]="isAuthenticated ? 'Введите ваш комментарий' : 'Войдите в систему, чтобы оставить комментарий.'"></textarea>
+            <p class="error" *ngIf="commentForm.get('comment')!.invalid && commentForm.get('comment')!.touched && isAuthenticated">
+                Максимальная длина комментария составляет {{ maxCommentLength }} символов, а также не может быть пустым.
+            </p>
+            <input [disabled]="!isAuthenticated" type="submit" value="Оставить комментарий">
+        </form>
+        <div *ngIf="recipe.comments.length == 0">
+            <h2>Комментариев пока что нет...</h2>
+        </div>
+        <div *ngFor="let comment of recipe.comments" class="comment">
+            <h2>
+                <a [routerLink]="[ '/profile', comment.userId]">
+                    {{ comment.username }}:
+                </a>
+            </h2>
+            <p>{{ comment.content }}</p>
+        </div>
+    </div>
+</ng-template>
+
+<!-- Loading -->
+<ng-template #loading>
+    <div class="loading">
+        <h1>Загрузка...</h1>
+    </div>
+</ng-template>
