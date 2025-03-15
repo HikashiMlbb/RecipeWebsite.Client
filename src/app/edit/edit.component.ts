@@ -6,6 +6,7 @@ import { RecipeService } from '@/services/recipes/recipe.service';
 import { DetailedRecipe } from '@/services/recipes/interfaces/detailed-recipe';
 import { RecipeFormData } from '@/recipe-form/recipe-form.data';
 import { NgIf } from '@angular/common';
+import moment from 'moment';
 
 @Component({
   selector: 'app-edit',
@@ -47,12 +48,35 @@ export class EditComponent implements OnInit {
       }
 
       this.recipe = data;
-      console.debug(this.getInitialData);
     });
   }
 
-  protected onSubmit(data: RecipeFormData): void {
-    console.debug(data);
+  protected onSubmit(recipe: RecipeFormData): void {
+    let formData = new FormData();
+    let timespan = moment.duration(`${recipe.hours}:${recipe.minutes}`)
+
+    formData.append('title', recipe.title);
+    formData.append('description', recipe.description);
+    formData.append('difficulty', `${recipe.difficulty}`);
+    formData.append('cookingTime', `${timespan.days()}.${timespan.hours()}:${timespan.minutes()}`);
+    formData.append('instruction', recipe.instruction);
+
+    recipe.ingredients.forEach((value, index) => {
+      formData.append(`ingredients[${index}].name`, value.name);
+      formData.append(`ingredients[${index}].count`, `${value.count}`);
+      formData.append(`ingredients[${index}].unitType`, value.type);
+    })
+
+    if (recipe.image) formData.append('image', recipe.image);
+
+    this.recipeService.update(this.recipe.id, formData)
+      .subscribe(isOk => {
+        if (!isOk) {
+          alert('Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.');
+        }
+
+        this.router.navigate([ '/details', this.recipe.id ]);
+      })
   }
 
   protected get getInitialData(): RecipeFormData {

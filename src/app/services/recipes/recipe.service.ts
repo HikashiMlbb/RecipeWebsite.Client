@@ -60,6 +60,15 @@ export class RecipeService {
       );
   }
 
+  update(id: number, data: FormData): Observable<boolean> {
+    return this.http
+      .put(`${API_URL}/api/recipes/${id}`, data, { withCredentials: true })
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
+  }
+
   getCookingTime(cookingTime: string): string {
     let duration = moment.duration(cookingTime);
     let result: Array<string> = [];
