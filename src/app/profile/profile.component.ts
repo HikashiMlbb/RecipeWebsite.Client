@@ -18,6 +18,7 @@ import { NgIf } from '@angular/common';
 export class ProfileComponent implements OnInit, AfterViewInit {
   protected user!: UserDetailed;
   protected isLoading: boolean = true;
+  protected isSigningOut: boolean = false;
 
   private isForeign: boolean = false;
 
@@ -51,9 +52,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     setTimeout(() => this.isLoading = false, this.renderDelayMs);
   }
 
-  protected onClick(): void {
+  protected onSignOutClicked(): void {
+    this.isSigningOut = true;
     this.cookieService.delete('Access-Token');
-    this.router.navigate([ 'login' ]);
+    setTimeout(() => {
+      this.cookieService.check('Access-Token') ? this.isSigningOut = false : this.router.navigate([ '/login' ]);
+    }, 250);
   }
 
   private handleForeignProfile() {
