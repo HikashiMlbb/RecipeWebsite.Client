@@ -30,7 +30,7 @@ export class EditComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.cookieService.check('Access-Token')) {
-      this.redirectToHome();
+      this.router.navigate([ '/login' ]);
       return;
     }
 
