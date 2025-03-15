@@ -84,6 +84,16 @@ export class RecipeService {
     return result.join(' ');
   }
 
+  getHoursFromCookingTime(cookingTime: string): number {
+    return Math.floor(moment.duration(cookingTime).asHours());
+  }
+
+  getMinutesFromCookingTime(cookingTime: string): number {
+    let duration = moment.duration(cookingTime);
+    let hours = Math.floor(duration.asHours());
+    return Math.ceil(duration.asMinutes()) - hours * 60;
+  }
+
   private pipeResults(observable: Observable<Array<Recipe>>): Observable<Array<Recipe>> {
     return observable.pipe(
       map((recipes: Array<Recipe>): Array<Recipe> =>
