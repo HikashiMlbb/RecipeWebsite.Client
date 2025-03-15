@@ -1,3 +1,4 @@
+
 import { RecipeConstraints } from '@/recipe-form/constraints';
 import { RecipeService } from '@/services/recipes/recipe.service';
 import { NgFor, NgIf } from '@angular/common';
@@ -21,9 +22,19 @@ import { difficultyFromStringMapper } from '@/services/mapping.utils';
       [initialData]="null" />
   `
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
   private readonly recipeService: RecipeService = inject(RecipeService);
   private readonly router: Router = inject(Router);
+  private readonly cookieService: CookieService = inject(CookieService);
+
+  public ngOnInit(): void {
+    let isAuthorized = this.cookieService.check('Access-Token');
+    if (isAuthorized) {
+      return;
+    }
+    
+    this.router.navigate([ '/login' ]);
+  }
 
   protected onSubmit(recipe: RecipeFormData) {
     let formData = new FormData();
