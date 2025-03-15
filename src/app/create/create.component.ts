@@ -52,19 +52,15 @@ export class CreateComponent implements OnInit {
       formData.append(`ingredients[${index}].unitType`, value.type);
     })
 
-    if (recipe.image) {
-      formData.append('image', recipe.image);
-    }
+    formData.append('image', recipe.image!);
 
-    console.debug(formData);
+    this.recipeService.create(formData).subscribe((recipeId: number) => {
+      if (isNaN(recipeId)) {
+        alert("Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.");
+        return;
+      }
 
-    // this.recipeService.create(formData).subscribe((recipeId: number) => {
-    //   if (isNaN(recipeId)) {
-    //     alert("Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.");
-    //     return;
-    //   }
-
-    //   this.router.navigate([ 'details', recipeId ]);
-    // })
+      this.router.navigate([ 'details', recipeId ]);
+    })
   }
 }

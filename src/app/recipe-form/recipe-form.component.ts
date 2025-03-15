@@ -47,13 +47,14 @@ export class RecipeFormComponent implements OnInit {
   public ngOnInit(): void {
     this.recipe.patchValue({
       title: this.initialData?.title,
-      image: "success",
+      image: this.initialData ? 'success' : '',
       description: this.initialData?.description,
       difficulty: difficultyToStringMapper.get(this.initialData?.difficulty ?? -1),
       hours: this.initialData?.hours,
       minutes: this.initialData?.minutes,
       instruction: this.initialData?.instruction,
     });
+
 
     this.isFileChosen = this.initialData !== null;
 
@@ -109,8 +110,8 @@ export class RecipeFormComponent implements OnInit {
 
   private createIngredient(name: string, count: number, type: string): FormGroup {
     return this.formBuilder.group({
-      name: [name, /* [ Validators.required, Validators.minLength(this.constraints.ingredientNameMinLength), Validators.maxLength(this.constraints.ingredientNameMaxLength) ]*/],
-      count: [`${count == 0 ? '' : count}`, /* [ Validators.required, Validators.min(this.constraints.ingredientMinCount), Validators.max(this.constraints.ingredientMaxCount), isNumber() ] */],
+      name: [name, [ Validators.required, Validators.minLength(this.constraints.ingredientNameMinLength), Validators.maxLength(this.constraints.ingredientNameMaxLength) ]],
+      count: [`${count == 0 ? '' : count}`, [ Validators.required, Validators.min(this.constraints.ingredientMinCount), Validators.max(this.constraints.ingredientMaxCount), isNumber() ]],
       type: [!type ? 'grams' : type]
     });
   }
