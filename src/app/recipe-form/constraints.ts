@@ -1,4 +1,4 @@
-export const CreateConstraints = {
+export const RecipeConstraints = {
   titleMinLength: 3,
   titleMaxLength: 50,
   descriptionMinLength: 50,

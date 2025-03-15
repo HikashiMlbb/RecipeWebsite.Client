@@ -1,12 +1,13 @@
 <form [formGroup]="recipe" (ngSubmit)="onSubmit()">
-    <h1 class="title">Создать рецепт</h1>
+    <h1 class="title">{{ header }}</h1>
     <div class="recipe-content">
         <label>Введите название рецепта:</label>
         <input
             [class.error-input]="recipe.controls['title'].invalid && recipe.controls['title'].touched"
             formControlName="title" 
             type="text" 
-            placeholder="Введите название" />
+            placeholder="Введите название"
+            [value]="initialData?.title" />
         <span *ngIf="recipe.controls['title'].invalid && recipe.controls['title'].touched" class="error">
             Длина названия рецепта должна составлять от {{ constraints.titleMinLength }} до {{ constraints.titleMaxLength }} символов.
         </span>
@@ -80,7 +81,7 @@
     <div formArrayName="ingredients" class="recipe-content ingredient-list">
         <label>Перечислите ингредиенты для вашего рецепта:</label>
         <div 
-        *ngFor="let ingredient of ingredients.controls; let i = index;" 
+        *ngFor="let ingredient of ingredients.controls; index as i;" 
         [formGroupName]="i" 
         class="ingredient-content">
             <div class="ingredient-content-form">
@@ -126,8 +127,5 @@
             Длина инструкции должна составлять от {{ constraints.instructionMinLength }} до {{ constraints.instructionMaxLength }} символов.
         </span>
     </div>
-    <span *ngIf="isFormError" class="error">
-        Произошла неизвестная ошибка. Пожалуйста, повторите попытку позже.
-    </span>
     <input [disabled]="isSubmitting" type="submit" value="Создать" />
 </form>

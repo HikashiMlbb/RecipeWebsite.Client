@@ -49,6 +49,7 @@ input, select {
     padding: 0.5rem;
     border-radius: 2rem;
     margin: auto;
+    cursor: pointer;
 }
 
 textarea {
