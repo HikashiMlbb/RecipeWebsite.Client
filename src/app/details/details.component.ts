@@ -90,9 +90,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   protected starRateClicked(index: number): void {
     if (!this.isAuthenticated || this.isUserAuthor) return;
-    this.currentStar = index == this.currentStar ? -1 : index;
  
-    this.recipeService.rate(this.recipe.id, this.currentStar + 1).subscribe(star => this.currentStar = star - 1);
+    this.recipeService.rate(this.recipe.id, index + 1).subscribe(star => this.currentStar = star - 1);
   }
 
   protected starRateHovered(index: number): void {
