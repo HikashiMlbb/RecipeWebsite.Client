@@ -12,7 +12,8 @@
             </div>
             <div class="details-rate">
                 @if (rating != 0) {
-                    <p><span>{{ rating }} </span><span>{{ getRating() }}</span></p>
+                    <p><span>{{ getRating() }}</span></p>
+                    <p class="votes">({{ votes }} оценок)</p>
                 } @else {
                     <p>Нет оценок</p>
                 }
