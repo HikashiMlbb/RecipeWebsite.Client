@@ -10,7 +10,7 @@
             <h1>Пользователь:</h1>
             <h2>{{ user.username }} <span class="admin" *ngIf="user.role === 'Admin'">[Администратор]</span></h2>
         </div>
-        <div class="sign-out">
+        <div *ngIf="!isForeign" class="sign-out">
             <input [class.clicked]="isSigningOut" [disabled]="isSigningOut" (click)="onSignOutClicked()" type="button" value="Выйти">
         </div>
     </div>
