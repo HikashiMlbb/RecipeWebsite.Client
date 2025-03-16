@@ -6,6 +6,6 @@
 }
 
 body {
-    background-image: url("/background-recipes.png");
+    background-image: url('./assets/background-recipes.png');
     background-repeat: repeat;
 }
