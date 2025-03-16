@@ -18,8 +18,8 @@ import { NgIf } from '@angular/common';
 export class ProfileComponent implements OnInit, AfterViewInit {
   protected user!: UserDetailed;
   protected isLoading: boolean = true;
-
-  private isForeign: boolean = false;
+  protected isSigningOut: boolean = false;
+  protected isForeign: boolean = false;
 
   private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly router: Router = inject(Router);
@@ -51,18 +51,33 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     setTimeout(() => this.isLoading = false, this.renderDelayMs);
   }
 
-  protected onClick(): void {
+  protected onSignOutClicked(): void {
+    this.isSigningOut = true;
     this.cookieService.delete('Access-Token');
-    this.router.navigate([ 'login' ]);
+    setTimeout(() => {
+      this.cookieService.check('Access-Token') ? this.isSigningOut = false : this.router.navigate([ '/login' ]);
+    }, 250);
   }
 
   private handleForeignProfile() {
     let userId = this.activatedRoute.snapshot.paramMap.get('userId');
+
+    if (this.cookieService.check('Access-Token')) {
+      let token = this.cookieService.get('Access-Token');
+      let payload = jwtDecode<TokenPayload>(token);
+
+      if (userId == payload.sub) {
+        this.handleMyProfile();
+        return;
+      }
+    }
+
     this.findUserId(Number(userId));
     this.isForeign = true; 
   }
 
   private handleMyProfile() {
+    this.isForeign = false;
     let token = this.cookieService.get('Access-Token');
     let payload = jwtDecode<TokenPayload>(token);
     this.findUserId(Number(payload.sub));

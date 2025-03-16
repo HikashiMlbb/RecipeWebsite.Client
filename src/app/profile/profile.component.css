@@ -52,7 +52,7 @@ div.main input {
     margin-left: auto;
 }
 
-div.main input:hover {
+div.main input:hover, div.main input.clicked {
     background-color: var(--red);
     color: white;
 }
