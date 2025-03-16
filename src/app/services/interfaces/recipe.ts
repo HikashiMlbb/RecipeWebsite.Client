@@ -5,4 +5,5 @@ export interface Recipe {
     difficulty: number;
     cookingTime: string;
     rating: number;
+    votes: number;
 }

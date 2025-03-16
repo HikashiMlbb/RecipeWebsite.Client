@@ -20,6 +20,7 @@ export class RecipeCardComponent {
   @Input({ required: true }) difficulty!: number;
   @Input({ required: true }) cookingTime!: string;
   @Input({ required: true }) rating!: number;
+  @Input({ required: true }) votes!: number;
 
   getDifficulty(): string {
     return this._difficultyIcon.repeat(this.difficulty);
