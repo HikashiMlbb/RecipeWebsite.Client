@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.cookieService.delete('Access-Token');
     setTimeout(() => {
       this.cookieService.check('Access-Token') ? this.isSigningOut = false : this.router.navigate([ '/login' ]);
-    }, 250);
+    }, 750);
   }
 
   private handleForeignProfile() {
