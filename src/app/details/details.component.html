@@ -15,7 +15,7 @@
                 </div>
                 <p>Автор рецепта: <a [routerLink]="['/profile', recipe.author.id]">{{ recipe.author.username }}</a></p>
                 <p>Оценка: <b>{{ recipe.rating }}</b>🌟 ({{ recipe.votes }} оценок)</p>
-                <p class="rate-view">Ваша оценка:
+                <p *ngIf="isAuthenticated && !isUserAuthor" class="rate-view">Ваша оценка:
                     <svg
                         class="star"
                         [class.disabled]="!isAuthenticated || isUserAuthor" 
