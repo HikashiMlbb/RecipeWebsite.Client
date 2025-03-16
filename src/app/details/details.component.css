@@ -71,10 +71,6 @@ p {
     column-gap: .5rem;
 }
 
-.rate-view > small {
-    font-size: .5em;
-}
-
 .image {
     align-self: center;
 }
