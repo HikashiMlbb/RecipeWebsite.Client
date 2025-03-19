@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
   }
 
   protected onSubmit(user: UserAuth) {
-    console.log('Test' + API_URL);
     this.service
       .login(user)
       .subscribe((result: UserResult) => this.handleLogin(result));

@@ -87,12 +87,9 @@ export class RecipeFormComponent implements OnInit {
   protected onSubmit() {
     this.isSubmitting = true;
 
-    console.debug(this.ingredients.value);
-
     if (!this.recipe.valid || !this.ingredients.controls.every(x => x.valid)) {
       this.recipe.markAllAsTouched();
       this.isSubmitting = false;
-      console.warn(this.recipe)
       return;
 
     }
