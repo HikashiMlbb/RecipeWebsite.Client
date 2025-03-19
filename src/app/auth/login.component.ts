@@ -6,6 +6,7 @@ import { UserService } from '@/services/users/user.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { API_URL } from '@/services/config';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   protected onSubmit(user: UserAuth) {
+    console.log('Test' + API_URL);
     this.service
       .login(user)
       .subscribe((result: UserResult) => this.handleLogin(result));
