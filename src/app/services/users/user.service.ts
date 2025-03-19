@@ -6,12 +6,12 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { UserDetailed } from '@/services/users/interfaces/user-detailed';
 import { Recipe } from '@/services/interfaces/recipe';
 import { mapRecipeDetails } from '@/services/mapping.utils';
+import { API_URL } from '@/services/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl: string = "http://localhost";
   private readonly difficultyMapper: Map<number, number> = new Map([
     [1, 1],
     [2, 3],
@@ -22,7 +22,7 @@ export class UserService {
 
   login(user: UserAuth): Observable<UserResult> {
     return this.http
-      .post(`${this.apiUrl}/api/users/login`, { username: user.username, password: user.password }, { withCredentials: true })
+      .post(`${API_URL}/api/users/login`, { username: user.username, password: user.password }, { withCredentials: true })
       .pipe(
         map((): UserResult => ({ isOk: true, message: "" })),
         catchError((result: HttpErrorResponse): Observable<UserResult> => of({ isOk: false, message: result.error.title }))
@@ -31,7 +31,7 @@ export class UserService {
 
   register(user: UserAuth): Observable<UserResult> {
     return this.http
-      .post(`${this.apiUrl}/api/users/signup`, { username: user.username, password: user.password }, { withCredentials: true })
+      .post(`${API_URL}/api/users/signup`, { username: user.username, password: user.password }, { withCredentials: true })
       .pipe(
         map((): UserResult => ({ isOk: true, message: "" })),
         catchError((result: HttpErrorResponse): Observable<UserResult> => of({ isOk: false, message: result.error.code}))
@@ -40,7 +40,7 @@ export class UserService {
 
   getById(userId: number): Observable<UserDetailed | null> {
     return this.http
-      .get<UserDetailed | null>(`${this.apiUrl}/api/users/${userId}`)
+      .get<UserDetailed | null>(`${API_URL}/api/users/${userId}`)
       .pipe(
         map((user: UserDetailed | null): UserDetailed | null => {
           if (user === null) return null;
