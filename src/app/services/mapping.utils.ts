@@ -20,6 +20,6 @@ export const difficultyToStringMapper = new Map<number, string>([
 
 export const mapRecipeDetails = <T extends { image: string; difficulty: number; }>(recipe: T): T => ({ 
     ...recipe,
-    image: `${API_URL}/static/${recipe.image}?v=${Date.now()}`,
+    image: `${API_URL}/static/${recipe.image}`,
     difficulty: difficultyMapper.get(recipe.difficulty)!
 })
